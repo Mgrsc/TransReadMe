@@ -30,10 +30,11 @@ curl -fsSLO https://raw.githubusercontent.com/Mgrsc/TransReadMe/main/trans_readm
    SOURCE_README_PATH = 'readmes_i18n/README_zh-cn.md'
    ```
 
-3. 设置OpenAI API的URL和模型
+3. 设置OpenAI API的URL和模型以及模型温度
    ```python
    BASE_API_URL = 'https://xxxx.xxx/v1/chat/completions'
    MODEL = 'gpt-4o'
+   TEMPERATURE = 0
    ```
 
 4. 设置翻译后的README文件存放目录

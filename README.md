@@ -1,13 +1,13 @@
 # TransReadMe
 
-This project aims to use OpenAI's API to translate a source README file into multiple languages and generate corresponding README files. The script will automatically detect the language of the source README and generate translated versions in the target languages.
+This project aims to use the OpenAI API to translate a source README file into multiple languages and generate corresponding README files. This script will automatically detect the language of the source README and generate translated versions in the target languages.
 
 ## Features
 
 - Automatically detect the language of the source README
 - Translate the README file into multiple target languages
 - Save the translated README files to a specified directory
-- Generate a README in the default display language in the root directory
+- Generate a README in the default display language to the root directory
 
 ## Installation
 
@@ -25,18 +25,19 @@ Before using the script, you need to configure the following:
    API_KEY = 'your_openai_api_key'
    ```
 
-2. Set the path of the source README file
+2. Set the path to the source README file
    ```python
    SOURCE_README_PATH = 'readmes_i18n/README_zh-cn.md'
    ```
 
-3. Set the OpenAI API URL and model
+3. Set the OpenAI API URL, model, and model temperature
    ```python
    BASE_API_URL = 'https://xxxx.xxx/v1/chat/completions'
    MODEL = 'gpt-4o'
+   TEMPERATURE = 0
    ```
 
-4. Set the directory for storing translated README files
+4. Set the directory to store the translated README files
    ```python
    OUTPUT_DIR = 'readmes_i18n'
    ```
@@ -46,7 +47,7 @@ Before using the script, you need to configure the following:
    DEFAULT_DISPLAY_LANGUAGE = 'zh-cn'
    ```
 
-6. Define the languages to translate into
+6. Define the languages to be translated
    ```python
    TARGET_LANGUAGES = {
        'es': 'Spanish',
@@ -59,17 +60,17 @@ Before using the script, you need to configure the following:
 
 ## Usage
 
-Run the script to generate translated README files:
+Run the script to generate the translated README files:
 ```bash
 python translate_readme.py
 ```
 
 The script will:
 - Read and translate the content of the source README file.
-- Save the translated README files to the specified directory, named in the format README_language_code.md.
-- Copy or translate the default display language README file and save it to the repository's root directory as README.md.
+- Save the translated README files to the specified directory, named in the format README_language code.md.
+- Copy or translate the README file in the default display language and save it as README.md in the root directory of the repository.
 
 ## Notes
 
-- Translation quality depends on the performance of OpenAI's API.
-- Ensure the security of the API key and do not expose it in public.
+- The translation quality depends on the performance of the OpenAI API.
+- Please ensure the security of your API key and do not expose it in public places.

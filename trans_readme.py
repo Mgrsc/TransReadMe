@@ -1,5 +1,7 @@
 import os
-import requests
+import json
+import urllib.request
+import urllib.error
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Set your OpenAI API key
@@ -13,6 +15,9 @@ SOURCE_README_PATH = 'readmes_i18n/README_zh-cn.md'
 
 # Set the OpenAI API model
 MODEL = 'gpt-4o-2024-08-06'
+
+# Set the model temperature
+TEMPERATURE = 0.1
 
 # Set the directory to store translated README files
 OUTPUT_DIR = 'readmes_i18n'
@@ -85,17 +90,29 @@ Translate the following text to {target_language}:
             {"role": "system", "content": "You are a helpful assistant that translates text."},
             {"role": "user", "content": prompt}
         ],
-        "temperature": 0.3,
+        "temperature": TEMPERATURE,
     }
 
     try:
-        response = requests.post(BASE_API_URL, headers=headers, json=data)
-        response.raise_for_status()
-        response_json = response.json()
-        translated_text = response_json['choices'][0]['message']['content'].strip()
-        return translated_text
-    except requests.RequestException as e:
+        request_data = json.dumps(data).encode('utf-8')
+        req = urllib.request.Request(
+            BASE_API_URL,
+            data=request_data,
+            headers=headers,
+            method='POST'
+        )
+
+        with urllib.request.urlopen(req) as response:
+            response_data = response.read().decode('utf-8')
+            response_json = json.loads(response_data)
+            translated_text = response_json['choices'][0]['message']['content'].strip()
+            return translated_text
+
+    except (urllib.error.URLError, urllib.error.HTTPError) as e:
         print(f"API request failed: {e}")
+        return None
+    except json.JSONDecodeError as e:
+        print(f"JSON decode error: {e}")
         return None
 
 # Check if the source README file path is the root directory README.md
